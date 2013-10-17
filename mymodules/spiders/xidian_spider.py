@@ -38,7 +38,7 @@ class Xidian_Spider(BaseSpider):
         item['url'] = response.url
         item['title'] = hxs.select('/html/head/title/text()').extract()[0]
         
-        """FIXME:This XPath select all the elements,include the javascript code.BAD!!"""
+        """FIXME:This XPath select all the elements,include the javascript code.BAD!!!"""
         str = ''
         list = hxs.select('/html/body//*/text()').extract()
         for s in list:

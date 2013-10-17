@@ -9,7 +9,7 @@ from Website.models import Results
 PAGE_SIZE=10
 
 def dosearch(string,upage):
-    conn = ES('127.0.0.1:9200', timeout=3.5)#连接ES
+    conn = ES('127.0.0.1:9200', timeout=3.5)#Connect to ES
     fq_title = FieldQuery(analyzer='ik')
     fq_title.add('title',string)
     
