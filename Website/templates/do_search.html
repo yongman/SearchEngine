@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <title>{% block title %}Search{% endblock %}</title>
+    {% block extrastyle %}{% endblock %}
+    {% block extrahead %}{% endblock %}
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+</head>
+{% load i18n %}
+
+<body>
+
+<h1>Search</h1>
+<div class="main_separator"></div>
+
+<ul>
+    {{current_time}}
+</ul>
+<div>
+    <form action="/search/" method="get">
+        <input type="text" name="q">
+        <input type="submit" value="Search">
+        <input type="hidden" name="page" value="1">
+    </form>
+</div>
+</body>
+</html>

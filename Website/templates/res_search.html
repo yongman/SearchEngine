@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="{{ LANGUAGE_CODE }}" xml:lang="{{ LANGUAGE_CODE }}" {% if LANGUAGE_BIDI %}dir="rtl"{% endif %}>
+<head>
+    <title>{% block title %}Result{% endblock %}</title>
+    {% block extrastyle %}{% endblock %}
+    {% block extrahead %}{% endblock %}
+    {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE" />{% endblock %}
+</head>
+{% load i18n %}
+
+<body>
+
+<h1>Result</h1>
+<p>查询的内容: <font color="red">{{ query }}'</font><br>
+发现<font color="red">{{ count }}</font>条符合条件的内容，
+用时<font color="red">{{ time }}</font>秒,
+第<font color="red">{{ page }}</font>页
+{% if results %}
+    {% for res in results %}
+    <li><b> <a href={{ res.url }}>{{ res.title }}</a></b></li>
+    {{ res.url }}<br/>
+    {{ res.content }}
+    {% endfor %}
+{% else %}
+     <p>No contents found.
+{% endif %}
+<br/><br/><br/><a href=http://127.0.0.1:8000/search/?q={{ query }}&page={{ nextpage }}>下一页</a>
+</body>
+</html>
