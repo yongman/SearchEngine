@@ -26,7 +26,7 @@ class Xidian_Spider(BaseSpider):
         self.allowed_domains = ['xidian.edu.cn']
 
     def parse(self, response):
-        
+        """In this parse,we use double yeild to return the item or Request"""
         hxs = HtmlXPathSelector(response)
 
         refer_websites = hxs.select('//@href').extract()
@@ -38,6 +38,7 @@ class Xidian_Spider(BaseSpider):
         item['url'] = response.url
         item['title'] = hxs.select('/html/head/title/text()').extract()[0]
         
+        """FIXME:This XPath select all the elements,include the javascript code.BAD!!"""
         str = ''
         list = hxs.select('/html/body//*/text()').extract()
         for s in list:
@@ -51,7 +52,8 @@ class Xidian_Spider(BaseSpider):
         for weburl in refer_websites:
             
             utf8_url = weburl.encode('utf-8')
-
+            
+            """The following regex to match the prefix and postfix of urls"""
             postfix = re.compile(r'.+\.((jpg)|(ico)|(rar)|(zip)|(doc)|(ppt)|(xls)|(css)|(exe)|(pdf))x?$')
             prefix = re.compile(r'^((javascript:)|(openapi)).+')
 

@@ -9,15 +9,15 @@ INDEX_NAME='xidian_spider'
 class SearchIndex(object):
 
     def SearchInit(self):
-        self.conn = ES('127.0.0.1:9200', timeout=3.5)#连接ES
+        self.conn = ES('127.0.0.1:9200', timeout=3.5)#Connect to ES
         try:
             self.conn.delete_index(INDEX_NAME)
             #pass
         except:
             pass
-        self.conn.create_index(INDEX_NAME)#新建一个索引
+        self.conn.create_index(INDEX_NAME)#Create a new INDEX
         
-        #定义索引存储结构
+        #Define the structure of the data format
         mapping = {u'content': {'boost': 1.0,
                           'index': 'analyzed',
                           'store': 'yes',
@@ -42,7 +42,7 @@ class SearchIndex(object):
         }
         
 
-        self.conn.put_mapping("searchEngine-type", {'properties':mapping}, [INDEX_NAME])#定义type
+        self.conn.put_mapping("searchEngine-type", {'properties':mapping}, [INDEX_NAME])#Define the type
 
         
     def AddIndex(self,item):
@@ -54,7 +54,7 @@ class SearchIndex(object):
                 },INDEX_NAME,'searchEngine-type')
             
     def IndexDone(self):
-        self.conn.default_indices=[INDEX_NAME]#设置默认的索引
-        self.conn.refresh()#刷新以获得最新插入的文档
+        self.conn.default_indices=[INDEX_NAME]#Set the default indices
+        self.conn.refresh()#Refresh the ES
         
 
