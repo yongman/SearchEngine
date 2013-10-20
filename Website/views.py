@@ -6,6 +6,8 @@ from mymodules.search import dosearch
 import sys
 from time import clock
 
+PAGE_SIZE=10
+
 def current_time(request):
 	now=datetime.datetime.now()
 	return render(request,'my_test.html',{'current_time':now})
@@ -24,13 +26,17 @@ def search(request):
         else:
             page = unicode(1)
         start = clock()
-        results = dosearch(q,page)
+        
+        #this list is used to obtain the total_hits,only total_hits[0] is used.
+        total_hits = []
+        results = dosearch(q,page,total_hits)
         end = clock()
         return render(request,'res_search.html', {'results' : results,
                                                     'query':q,
-                                                    'count':len(results),
+                                                    'count':total_hits[0],
                                                     'time':end-start,
                                                     'page':page,
+                                                    'total_page':total_hits[0]/PAGE_SIZE,
                                                     'nextpage':int(page)+1})
     else:
         message = 'You submitted an empty form.'

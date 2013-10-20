@@ -8,7 +8,7 @@ from Website.models import Results
 
 PAGE_SIZE=10
 
-def dosearch(string,upage):
+def dosearch(string,upage,total_hits):
     conn = ES('127.0.0.1:9200', timeout=3.5)#Connect to ES
     fq_title = FieldQuery(analyzer='ik')
     fq_title.add('title',string)
@@ -18,7 +18,8 @@ def dosearch(string,upage):
 
     bq = BoolQuery(should=[fq_title,fq_content])
 
-    h=HighLighter(['['], [']'], fragment_size=100)
+    #add highlight to the search key word
+    h=HighLighter(['<font color="red">'], ['</font>'], fragment_size=100)
     
     page = int(upage.encode('utf-8'))
     if page < 1:
@@ -28,6 +29,11 @@ def dosearch(string,upage):
     s.add_highlight("content")
     s.add_highlight('title')
     results=conn.search(s,indices='xidian_spider',doc_types='searchEngine-type')
+    
+    #return the total hits by using a list object
+    total_hits.append(results.total)
+    
+    #print total_hits[0]
 
     list=[]
     for r in results:
