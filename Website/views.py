@@ -20,7 +20,7 @@ def search(request):
     """docstring for search"""
     if 'q' in request.GET:
         q = request.GET['q']
-        print q
+        #print request.META['SERVER_NAME']+':'+request.META['SERVER_PORT']
         if 'page' in request.GET:
             page = unicode(request.GET['page'])
         else:
@@ -37,6 +37,8 @@ def search(request):
                                                     'time':end-start,
                                                     'page':page,
                                                     'total_page':total_hits[0]/PAGE_SIZE,
+                                                    'host':request.META['SERVER_NAME'],
+                                                    'port':request.META['SERVER_PORT'],
                                                     'nextpage':int(page)+1})
     else:
         message = 'You submitted an empty form.'
