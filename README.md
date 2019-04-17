@@ -10,7 +10,7 @@ ElasticSearch版本：0.90.5
 
 
 项目中使用了Bloom Filter的Python插件
-项目地址：https://github.com/yming0221/pybloomfiltermmap
+项目地址：https://github.com/yongman/pybloomfiltermmap
 也可以直接使用pip install pybloomfiltermmap安装
 
 使用：
